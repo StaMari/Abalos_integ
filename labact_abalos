@@ -1,0 +1,44 @@
+import speech_recognition as sr
+import pyttsx3
+import pyaudio 
+
+
+def talk(text):
+    engine = pyttsx3.init()
+    engine.setProperty('rate', 150)
+    engine.say(text)
+    engine.runAndWait()
+
+
+listener = sr.Recognizer()
+
+
+def talk_command():
+    command = ""
+    try:
+        with sr.Microphone()as source:
+            print("Listening....")
+            voice = listener.listen(source)
+            command = listener.recognize_google_cloud(voice)
+            command = command.lower()
+            print(command)
+            if "Jacob" in command:
+                command = command.replace('Jacob', '')
+                print(command)
+            if "Name" in command:
+                talk("My name is Jacob ")
+            if "Live" in command:
+                talk("I live in United States of Mindanao")
+            if "Animal" in command:
+                talk("My favorite animal are Dogs")
+            if "Food" in command:
+                talk("My favorite food is your cooks")
+            else:
+                talk("Please say my name")
+
+    except:
+        pass
+        command = "NO MIC"
+        print(command)
+
+take_command()
